@@ -1,0 +1,41 @@
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 10px
+}
+
+.logout {
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.menuButton,
+.mobileLinks {
+   display: none;
+}
+
+@media (max-width: 768px) {
+    .links {
+        display: none;
+    }
+
+    .mobileLinks {
+        position: absolute;
+        width: 35%;
+        height: calc(100% - 100px);
+        right: 0;
+        top: 100px;
+        background-color: var(--bg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .menuButton {
+        display: block;
+        cursor: pointer;
+    }
+}
