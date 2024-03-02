@@ -1,8 +1,24 @@
 import Image from "next/image";
 import styles from "./SinglePost.module.css";
+import PostUser from "@/components/PostUser/PostUser";
+import { Suspense } from "react";
 
-const SinglePostPage = ({ params }) => {
-  console.log(params);
+const getSinglePost = async (slug) => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${slug}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch single post");
+  }
+
+  return response.json();
+};
+
+const SinglePostPage = async ({ params }) => {
+  const { slug } = params;
+
+  const post = await getSinglePost(slug);
 
   return (
     <div className={styles.container}>
@@ -15,7 +31,7 @@ const SinglePostPage = ({ params }) => {
         />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.detail}>
           <Image
             className={styles.avatar}
@@ -24,21 +40,15 @@ const SinglePostPage = ({ params }) => {
             width={50}
             height={50}
           />
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Author</span>
-            <span className={styles.detailValue}>Sujesh</span>
-          </div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <PostUser userId={post.userId} />
+          </Suspense>
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>Published</span>
             <span className={styles.detailValue}>01-03-2024</span>
           </div>
         </div>
-        <div className={styles.content}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore
-          molestias culpa minus rem qui natus a error, unde quo tenetur!
-          Voluptatibus praesentium quam quidem rerum nemo odit doloribus
-          veritatis modi?
-        </div>
+        <div className={styles.content}>{post.body}</div>
       </div>
     </div>
   );
