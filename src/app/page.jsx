@@ -1,9 +1,18 @@
 import Image from "next/image";
 import styles from "./home.module.css";
+import HydrationTest from "@/components/HydrationTest";
+import dynamic from "next/dynamic";
+
+const HydrationTestWithoutSSR = dynamic(
+  () => import("@/components/HydrationTest"),
+  { ssr: false }
+);
 
 const HomePage = () => {
   return (
     <div className={styles.container}>
+      {/* Added the below code to test hydration issue check */}
+      {/* <HydrationTestWithoutSSR /> */}
       <div className={styles.textContainer}>
         <h1 className={styles.title}>Creative thoughts agency.</h1>
         <p className={styles.description}>
