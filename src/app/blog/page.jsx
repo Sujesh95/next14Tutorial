@@ -1,8 +1,10 @@
 import PostCard from "@/components/PostCard/PostCard";
 import styles from "./Blog.module.css";
+import { getPosts } from "@/lib/data";
 
-const getPosts = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+// FETCHING POSTS VIA API ROUTES
+const getData = async () => {
+  const response = await fetch("http://localhost:3000/api/blog", {
     next: { revalidate: 3600 },
   });
 
@@ -12,10 +14,17 @@ const getPosts = async () => {
   return response.json();
 };
 
+export const metadata = {
+  title: "Posts page",
+  description: "Next.js posts page",
+};
+
 const BlogPage = async ({ params, searchParams }) => {
   console.log(params, searchParams);
 
-  const posts = await getPosts();
+  // const posts = await getPosts();
+
+  const posts = await getData();
 
   return (
     <div className={styles.container}>
