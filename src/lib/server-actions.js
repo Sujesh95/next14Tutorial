@@ -1,5 +1,6 @@
 "use server";
 
+import { signIn, signOut } from "./auth";
 import { Post } from "./models";
 import { connectToDB } from "./utils";
 
@@ -34,4 +35,15 @@ export const deletePost = async (formData) => {
     console.log(error);
     throw new Error("Error while deleting post");
   }
+};
+
+/* Used for github login and logout */
+export const handleGithubLogin = async () => {
+  "use server";
+  await signIn("github");
+};
+
+export const handleGithubLogout = async () => {
+  "use server";
+  await signOut();
 };

@@ -4,6 +4,7 @@ import { useState } from "react";
 import NavLink from "../NavLink/NavLink";
 import styles from "./Links.module.css";
 import Image from "next/image";
+import { handleGithubLogout } from "@/lib/server-actions";
 
 const links = [
   {
@@ -24,10 +25,9 @@ const links = [
   },
 ];
 
-const session = true;
 const admin = true;
 
-const Links = () => {
+const Links = ({ session }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,10 +37,12 @@ const Links = () => {
           <NavLink key={link.title} {...link} />
         ))}
 
-        {session ? (
+        {session?.user ? (
           <>
-            {admin && <NavLink path="/admin" title="Admin" />}
-            <button className={styles.logout}>Logout</button>
+            {session?.user?.admin && <NavLink path="/admin" title="Admin" />}
+            <form action={handleGithubLogout}>
+              <button className={styles.logout}>Logout</button>
+            </form>
           </>
         ) : (
           <NavLink path="/login" title="Login" />
