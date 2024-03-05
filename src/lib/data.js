@@ -27,7 +27,7 @@ export const getSinglePost = async (slug) => {
 export const getUsers = async () => {
   try {
     connectToDB();
-    const users = User.find();
+    const users = await User.find();
     return users;
   } catch (error) {
     console.log(error);
@@ -39,7 +39,7 @@ export const getSingleUser = async (id) => {
   noStore();
   try {
     connectToDB();
-    const user = User.findById(id);
+    const user = await User.findById(id);
     return user;
   } catch (error) {
     console.log(error);

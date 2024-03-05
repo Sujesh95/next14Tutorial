@@ -39,7 +39,7 @@ const Links = ({ session }) => {
 
         {session?.user ? (
           <>
-            {session?.user?.admin && <NavLink path="/admin" title="Admin" />}
+            {session?.user?.isAdmin && <NavLink path="/admin" title="Admin" />}
             <form action={handleGithubLogout}>
               <button className={styles.logout}>Logout</button>
             </form>
